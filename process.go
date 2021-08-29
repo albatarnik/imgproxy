@@ -320,6 +320,38 @@ func applyWatermark(img *vipsImage, wmData *imageData, opts *watermarkOptions, f
 	return img.ApplyWatermark(wm, opacity)
 }
 
+
+func applyWatermark2(img *vipsImage, framesCount int) error {
+	if err := img.RgbColourspace(); err != nil {
+		return err
+	}
+
+	if err := img.CopyMemory(); err != nil {
+		return err
+	}
+
+	wm := new(vipsImage)
+	defer wm.Clear()
+
+	
+	if err := wm.buildText(); err != nil {
+		return err
+	}
+
+	width := img.Width()
+	height := img.Height()
+
+	if framesCount > 1 {
+		if err := wm.Replicate(width, height); err != nil {
+			return err
+		}
+	}
+
+	opacity := 1 * conf.WatermarkOpacity
+
+	return img.ApplyWatermark(wm, opacity)
+}
+
 func copyMemoryAndCheckTimeout(ctx context.Context, img *vipsImage) error {
 	err := img.CopyMemory()
 	checkTimeout(ctx)
@@ -550,13 +582,16 @@ func transformImage(ctx context.Context, img *vipsImage, data []byte, po *proces
 			return err
 		}
 	}
-
+/*
 	if po.Watermark.Enabled && watermark != nil {
 		if err = applyWatermark(img, watermark, &po.Watermark, 1); err != nil {
 			return err
 		}
 	}
-
+*/
+	if err = applyWatermark2(img, 1); err != nil {
+		return err
+	}
 	if err = img.RgbColourspace(); err != nil {
 		return err
 	}

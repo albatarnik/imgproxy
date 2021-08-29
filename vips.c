@@ -619,6 +619,45 @@ vips_apply_watermark(VipsImage *in, VipsImage *watermark, VipsImage **out, doubl
 #endif
 }
 
+
+
+
+int
+vips_apply_line(VipsImage *in) {
+#if VIPS_SUPPORT_COMPOSITE
+  double * VALORES = (double *) calloc (2, sizeof (double)); 
+  //VALORES[0] = 5.5;
+  //VALORES[1] = 9.5;
+  return vips_draw_line1 (in,
+                5,
+            
+                2,
+                2,
+                50,
+                50);
+
+#else
+  vips_error("vips_apply_watermark", "Watermarking is not supported (libvips 8.6+ reuired)");
+  return 1;
+#endif
+}
+
+
+int
+vips_apply_text(VipsImage **out ) {
+#if VIPS_SUPPORT_COMPOSITE
+
+
+  int res = vips_text(out,"sssss" , NULL);
+  
+
+  return res;
+#else
+  vips_error("vips_apply_watermark", "Watermarking is not supported (libvips 8.6+ reuired)");
+  return 1;
+#endif
+}
+
 int
 vips_arrayjoin_go(VipsImage **in, VipsImage **out, int n) {
   return vips_arrayjoin(in, out, n, "across", 1, NULL);
