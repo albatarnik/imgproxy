@@ -1146,6 +1146,7 @@ func parsePathBasic(parts []string, headers *processingHeaders) (string, *proces
 	}
 
 	po.WatermarkText=parts[5]
+	//none is the empty watermark
 	if po.WatermarkText == "none" {
 		po.WatermarkText = "";
 	}

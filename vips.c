@@ -608,8 +608,8 @@ vips_apply_watermark(VipsImage *in, VipsImage *watermark, VipsImage **out, doubl
 
   int res =
     vips_composite2(in, t[3], &t[4], VIPS_BLEND_MODE_OVER, "compositing_space", in->Type , 
-      "x" , in->Xsize - t[3]->Xsize ,
-          "y" , in->Ysize - t[3]->Ysize,
+      "x" , in->Xsize - t[3]->Xsize - (t[3]->Xsize * 10 / 100) ,
+          "y" , in->Ysize - t[3]->Ysize - (t[3]->Ysize * 50 / 100),
      NULL) ||
     vips_cast(t[4], out, vips_image_get_format(in), NULL);
 
