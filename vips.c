@@ -649,14 +649,16 @@ vips_apply_line(VipsImage *in) {
 int
 vips_apply_text(VipsImage **out , char *waterMarkText ) {
 #if VIPS_SUPPORT_COMPOSITE
+ char res[300] = "<span foreground=\"white\">";
+  strcat(res, waterMarkText);
+   strcat(res, "</span>");
 
-
-  int res = vips_text(out,waterMarkText ,
+  int res0 = vips_text(out,res ,
     "rgba" , 1 ,
      NULL);
   
 
-  return res;
+  return res0;
 #else
   vips_error("vips_apply_watermark", "Watermarking is not supported (libvips 8.6+ reuired)");
   return 1;
