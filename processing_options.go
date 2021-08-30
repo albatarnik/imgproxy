@@ -1146,7 +1146,9 @@ func parsePathBasic(parts []string, headers *processingHeaders) (string, *proces
 	}
 
 	po.WatermarkText=parts[5]
-	
+	if po.WatermarkText == "none" {
+		po.WatermarkText = "";
+	}
 
 	url, extension, err := decodeURL(parts[6:])
 	if err != nil {
