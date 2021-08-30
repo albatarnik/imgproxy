@@ -428,10 +428,21 @@ func (img *vipsImage) Resize(scale float64, hasAlpa bool) error {
 }
 
 
-func (img *vipsImage) buildText() error {
+func (img *vipsImage) buildText(waterMarkText string) error {
 	var tmp *C.VipsImage
 
-	if C.vips_apply_text(&tmp) != 0 {
+	 /*cWaterMarkText := C.CString(waterMarkText)
+	 C.free(unsafe.Pointer(cWaterMarkText))
+	fmt.Println(cWaterMarkText);
+	fmt.Println("waterMarkText");
+fmt.Println(waterMarkText);
+*/
+
+	cWaterMarkText := unsafe.Pointer(C.CString(waterMarkText))
+	defer C.free(cWaterMarkText)
+//	cWaterMarkText = (*C.char)(cWaterMarkText)
+	if C.vips_apply_text(&tmp,(*C.char)(cWaterMarkText)) != 0 {
+	
 		return vipsError()
 	}
 	

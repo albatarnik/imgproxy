@@ -147,7 +147,7 @@ type processingOptions struct {
 	StripMetadata     bool
 	StripColorProfile bool
 	AutoRotate        bool
-
+	WatermarkText string
 	CacheBuster string
 
 	Watermark watermarkOptions
@@ -1145,7 +1145,10 @@ func parsePathBasic(parts []string, headers *processingHeaders) (string, *proces
 		return "", po, err
 	}
 
-	url, extension, err := decodeURL(parts[5:])
+	po.WatermarkText=parts[5]
+	
+
+	url, extension, err := decodeURL(parts[6:])
 	if err != nil {
 		return "", po, err
 	}

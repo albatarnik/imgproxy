@@ -647,11 +647,11 @@ vips_apply_line(VipsImage *in) {
 
 
 int
-vips_apply_text(VipsImage **out ) {
+vips_apply_text(VipsImage **out , char *waterMarkText ) {
 #if VIPS_SUPPORT_COMPOSITE
 
 
-  int res = vips_text(out,"sssss" , NULL);
+  int res = vips_text(out,waterMarkText , NULL);
   
 
   return res;
