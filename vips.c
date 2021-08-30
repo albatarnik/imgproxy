@@ -649,9 +649,9 @@ vips_apply_line(VipsImage *in) {
 int
 vips_apply_text(VipsImage **out , char *waterMarkText ) {
 #if VIPS_SUPPORT_COMPOSITE
- char res[300] = "<span foreground=\"white\">";
+  char res[300] = "<span foreground=\"white\">";
   strcat(res, waterMarkText);
-   strcat(res, "</span>");
+  strcat(res, "</span>");
 
   int res0 = vips_text(out,res ,
     "rgba" , 1 ,
