@@ -651,7 +651,9 @@ vips_apply_text(VipsImage **out , char *waterMarkText ) {
 #if VIPS_SUPPORT_COMPOSITE
 
 
-  int res = vips_text(out,waterMarkText , NULL);
+  int res = vips_text(out,waterMarkText ,
+    "rgba" , 1 ,
+     NULL);
   
 
   return res;
