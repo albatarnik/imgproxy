@@ -649,17 +649,17 @@ vips_apply_line(VipsImage *in) {
 int
 vips_apply_text(VipsImage **out , char *waterMarkText ) {
 #if VIPS_SUPPORT_COMPOSITE
-  //char res[300] = "<span foreground=\"white\" font=\"HelveticaNeue\" size=\"30000\">";
-  char res[300] = "<span foreground=\"white\" font=\"HelveticaNeue\" size=\"13000\" >";
-  strcat(res, waterMarkText);
-  strcat(res, "</span>");
+  
+  char str[300] = "<span foreground=\"white\" font=\"HelveticaNeue\" size=\"13000\" >";
+  strcat(str, waterMarkText);
+  strcat(str, "</span>");
 
-  int res0 = vips_text(out,res ,
+  int res = vips_text(out,str ,
     "rgba" , 1 ,
      NULL);
   
 
-  return res0;
+  return res;
 #else
   vips_error("vips_apply_watermark", "Watermarking is not supported (libvips 8.6+ reuired)");
   return 1;
