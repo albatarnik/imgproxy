@@ -1151,6 +1151,7 @@ func parsePathBasic(parts []string, headers *processingHeaders) (string, *proces
 	
 		return "", po, err
 	}
+	WatermarkText = strings.Replace(WatermarkText, "wm:", "", -1)
 	po.WatermarkText = WatermarkText
 	//none is the empty watermark
 	if po.WatermarkText == "none" {
