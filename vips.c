@@ -650,7 +650,7 @@ int
 vips_apply_text(VipsImage **out , char *waterMarkText ) {
 #if VIPS_SUPPORT_COMPOSITE
   //char res[300] = "<span foreground=\"white\" font=\"HelveticaNeue\" size=\"30000\">";
-  char res[300] = "<span foreground=\"white\" font=\"HelveticaNeue\" size=\"10000\" >";
+  char res[300] = "<span foreground=\"white\" font=\"HelveticaNeue\" size=\"13000\" >";
   strcat(res, waterMarkText);
   strcat(res, "</span>");
 
