@@ -289,7 +289,7 @@ func prepareWatermark(wm *vipsImage, wmData *imageData, opts *watermarkOptions, 
 
 	return wm.Embed(imgWidth, imgHeight, left, top, rgbColor{0, 0, 0}, true)
 }
-
+/*
 func applyWatermark(img *vipsImage, wmData *imageData, opts *watermarkOptions, framesCount int) error {
 	if err := img.RgbColourspace(); err != nil {
 		return err
@@ -319,9 +319,9 @@ func applyWatermark(img *vipsImage, wmData *imageData, opts *watermarkOptions, f
 
 	return img.ApplyWatermark(wm, opacity)
 }
+*/
 
-
-func applyWatermark2(img *vipsImage, waterMarkText string) error {
+func applyWatermark(img *vipsImage, waterMarkText string) error {
 	if err := img.RgbColourspace(); err != nil {
 		return err
 	}
@@ -581,7 +581,7 @@ func transformImage(ctx context.Context, img *vipsImage, data []byte, po *proces
 	}
 */
 	if len(po.WatermarkText) > 0  {
-		if  err = applyWatermark2(img, po.WatermarkText); err != nil {
+		if  err = applyWatermark(img, po.WatermarkText); err != nil {
 			return err
 		}
 	}
@@ -687,11 +687,11 @@ func transformAnimated(ctx context.Context, img *vipsImage, data []byte, po *pro
 		return err
 	}
 
-	if watermarkEnabled && watermark != nil {
+	/*if watermarkEnabled && watermark != nil {
 		if err = applyWatermark(img, watermark, &po.Watermark, framesCount); err != nil {
 			return err
 		}
-	}
+	}*/
 
 	if err = img.CastUchar(); err != nil {
 		return err
