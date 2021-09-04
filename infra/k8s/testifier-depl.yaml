@@ -1,0 +1,31 @@
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: testifier-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: testifier
+  template:
+    metadata:
+      labels:
+        app: testifier
+    spec:
+      containers:
+        - name: testifier
+          image: albatarnik/testifier:latest
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: testifier-srv
+spec:
+  selector:
+    app: testifier
+  ports:
+    - name: testifier
+      protocol: TCP
+      port: 8080
+      targetPort: 8080
