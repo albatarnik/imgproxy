@@ -147,7 +147,7 @@ type processingOptions struct {
 	StripMetadata     bool
 	StripColorProfile bool
 	AutoRotate        bool
-
+	WatermarkText string
 	CacheBuster string
 
 	Watermark watermarkOptions
@@ -802,7 +802,17 @@ func applyPresetOption(po *processingOptions, args []string) error {
 
 	return nil
 }
-
+func applyWatermarkOption(po *processingOptions, args []string) error {
+	
+	WatermarkText, err := url.QueryUnescape(args[0])
+	if err != nil {
+	
+		return fmt.Errorf("Invalid watermark: %s", args[0])
+	}
+	po.WatermarkText =WatermarkText
+	return nil
+}
+/*
 func applyWatermarkOption(po *processingOptions, args []string) error {
 	if len(args) > 7 {
 		return fmt.Errorf("Invalid watermark arguments: %v", args)
@@ -850,7 +860,7 @@ func applyWatermarkOption(po *processingOptions, args []string) error {
 	}
 
 	return nil
-}
+}*/
 
 func applyFormatOption(po *processingOptions, args []string) error {
 	if len(args) > 1 {
@@ -921,6 +931,7 @@ func applyAutoRotateOption(po *processingOptions, args []string) error {
 }
 
 func applyProcessingOption(po *processingOptions, name string, args []string) error {
+
 	switch name {
 	case "format", "f", "ext":
 		return applyFormatOption(po, args)
@@ -1005,6 +1016,7 @@ func parseURLOptions(opts []string) (urlOptions, []string) {
 	parsed := make(urlOptions, 0, len(opts))
 	urlStart := len(opts) + 1
 
+
 	for i, opt := range opts {
 		args := strings.Split(opt, ":")
 
@@ -1015,7 +1027,7 @@ func parseURLOptions(opts []string) (urlOptions, []string) {
 
 		parsed = append(parsed, urlOption{Name: args[0], Args: args[1:]})
 	}
-
+	
 	var rest []string
 
 	if urlStart < len(opts) {
@@ -1145,7 +1157,20 @@ func parsePathBasic(parts []string, headers *processingHeaders) (string, *proces
 		return "", po, err
 	}
 
-	url, extension, err := decodeURL(parts[5:])
+
+	WatermarkText, err := url.QueryUnescape(parts[5])
+	if err != nil {
+	
+		return "", po, err
+	}
+	WatermarkText = strings.Replace(WatermarkText, "wm:", "", -1)
+	po.WatermarkText = WatermarkText
+	//none is the empty watermark
+	if po.WatermarkText == "none" {
+		po.WatermarkText = "";
+	}
+
+	url, extension, err := decodeURL(parts[6:])
 	if err != nil {
 		return "", po, err
 	}

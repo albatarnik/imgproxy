@@ -19,6 +19,7 @@ RUN apt-get update \
     libsm6 \
     liblzma5 \
     libzstd1 \
+    fontconfig \
   && rm -rf /var/lib/apt/lists/*
 
 COPY --from=0 /usr/local/bin/imgproxy /usr/local/bin/

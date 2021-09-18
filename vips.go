@@ -6,7 +6,7 @@ package main
 #cgo CFLAGS: -O3
 #include "vips.h"
 */
-import "C"
+import "C" 
 import (
 	"bytes"
 	"context"
@@ -340,6 +340,7 @@ func (img *vipsImage) GetIntDefault(name string, def int) (int, error) {
 	return img.GetInt(name)
 }
 
+
 func (img *vipsImage) GetIntSlice(name string) ([]int, error) {
 	var ptr unsafe.Pointer
 	size := C.int(0)
@@ -421,6 +422,23 @@ func (img *vipsImage) Resize(scale float64, hasAlpa bool) error {
 		}
 	}
 
+	C.swap_and_clear(&img.VipsImage, tmp)
+
+	return nil
+}
+
+
+func (img *vipsImage) buildText(waterMarkText string) error {
+	var tmp *C.VipsImage
+
+	cWaterMarkText := unsafe.Pointer(C.CString(waterMarkText))
+	defer C.free(cWaterMarkText)
+
+	if C.vips_apply_text(&tmp,(*C.char)(cWaterMarkText)) != 0 {
+	
+		return vipsError()
+	}
+	
 	C.swap_and_clear(&img.VipsImage, tmp)
 
 	return nil
@@ -713,6 +731,22 @@ func (img *vipsImage) ApplyWatermark(wm *vipsImage, opacity float64) error {
 	}
 	C.swap_and_clear(&img.VipsImage, tmp)
 
+	return nil
+}
+
+func (img *vipsImage) ApplyStaticWatermark() error {
+
+
+	/*if C.vips_apply_line(img.VipsImage) != 0 {
+		return vipsError()
+	}*/
+//	var tmp *C.VipsImage
+
+	/*if C.vips_apply_text(img.VipsImage) != 0 {
+		return vipsError()
+	}
+	C.swap_and_clear(&img.VipsImage, tmp)
+*/
 	return nil
 }
 

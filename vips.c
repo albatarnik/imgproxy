@@ -607,10 +607,57 @@ vips_apply_watermark(VipsImage *in, VipsImage *watermark, VipsImage **out, doubl
   }
 
   int res =
-    vips_composite2(in, t[3], &t[4], VIPS_BLEND_MODE_OVER, "compositing_space", in->Type, NULL) ||
+    vips_composite2(in, t[3], &t[4], VIPS_BLEND_MODE_OVER, "compositing_space", in->Type , 
+      "x" , in->Xsize - t[3]->Xsize - (t[3]->Xsize * 10 / 100) ,
+          "y" , in->Ysize - t[3]->Ysize - (t[3]->Ysize * 50 / 100),
+     NULL) ||
     vips_cast(t[4], out, vips_image_get_format(in), NULL);
 
   clear_image(&base);
+
+  return res;
+#else
+  vips_error("vips_apply_watermark", "Watermarking is not supported (libvips 8.6+ reuired)");
+  return 1;
+#endif
+}
+
+
+
+
+int
+vips_apply_line(VipsImage *in) {
+#if VIPS_SUPPORT_COMPOSITE
+  double * VALORES = (double *) calloc (2, sizeof (double)); 
+  //VALORES[0] = 5.5;
+  //VALORES[1] = 9.5;
+  return vips_draw_line1 (in,
+                5,
+            
+                2,
+                2,
+                50,
+                50);
+
+#else
+  vips_error("vips_apply_watermark", "Watermarking is not supported (libvips 8.6+ reuired)");
+  return 1;
+#endif
+}
+
+
+int
+vips_apply_text(VipsImage **out , char *waterMarkText ) {
+#if VIPS_SUPPORT_COMPOSITE
+  
+  char str[300] = "<span foreground=\"white\" font=\"HelveticaNeue\" size=\"13000\" >";
+  strcat(str, waterMarkText);
+  strcat(str, "</span>");
+
+  int res = vips_text(out,str ,
+    "rgba" , 1 ,
+     NULL);
+  
 
   return res;
 #else

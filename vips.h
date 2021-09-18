@@ -91,6 +91,9 @@ int vips_ensure_alpha(VipsImage *in, VipsImage **out);
 
 int vips_apply_watermark(VipsImage *in, VipsImage *watermark, VipsImage **out, double opacity);
 
+int vips_apply_line(VipsImage *in);
+int vips_apply_text(VipsImage **out , char *waterMarkText ) ;
+
 int vips_arrayjoin_go(VipsImage **in, VipsImage **out, int n);
 
 int vips_strip(VipsImage *in, VipsImage **out);
