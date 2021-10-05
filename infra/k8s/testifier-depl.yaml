@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: testifier
-          image: albatarnik/testifier:latest
+          image: newsifiercom/resizer:latest
 ---
 apiVersion: v1
 kind: Service
