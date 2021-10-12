@@ -15,6 +15,13 @@ spec:
       containers:
         - name: testifier
           image: newsifiercom/resizer:latest
+          resources:
+            requests:
+              memory: "500Mi"
+              cpu: "760m"
+            limits:
+              memory: "500Mi"
+              cpu: "2000m"
 ---
 apiVersion: v1
 kind: Service
