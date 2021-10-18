@@ -17,10 +17,10 @@ spec:
           image: newsifiercom/resizer:latest
           resources:
             requests:
-              memory: "500Mi"
+              memory: "1700Mi"
               cpu: "760m"
             limits:
-              memory: "500Mi"
+              memory: "2000Mi"
               cpu: "2000m"
 ---
 apiVersion: v1
