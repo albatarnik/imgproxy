@@ -20,7 +20,7 @@ spec:
               memory: "1300Mi"
               cpu: "760m"
             limits:
-              memory: "2000Mi"
+              memory: "1350Mi"
               cpu: "2000m"
 ---
 apiVersion: v1
