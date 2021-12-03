@@ -30,7 +30,7 @@ COPY NOTICE /usr/local/share/doc/imgproxy/
 ENV VIPS_WARNING=0
 ENV MALLOC_ARENA_MAX=2
 ENV LD_LIBRARY_PATH /usr/local/lib
-ENV IMGPROXY_ALLOWED_SOURCES=https://s3-newsifier.ams3.digitaloceanspaces.com/
+ENV IMGPROXY_ALLOWED_SOURCES=https://s3-newsifier.ams3.digitaloceanspaces.com/,https://ams3.cdn.digitaloceanspaces.com
 ENV IMGPROXY_MAX_SRC_RESOLUTION=200
 CMD ["imgproxy"]
 
