@@ -14,12 +14,12 @@ LABEL maintainer="Sergey Alexandrovich <darthsim@gmail.com>"
 
 RUN apt-get update \
   && apt-get install -y --no-install-recommends \
-    bash \
-    ca-certificates \
-    libsm6 \
-    liblzma5 \
-    libzstd1 \
-    fontconfig \
+  bash \
+  ca-certificates \
+  libsm6 \
+  liblzma5 \
+  libzstd1 \
+  fontconfig \
   && rm -rf /var/lib/apt/lists/*
 
 COPY --from=0 /usr/local/bin/imgproxy /usr/local/bin/
@@ -32,6 +32,7 @@ ENV MALLOC_ARENA_MAX=2
 ENV LD_LIBRARY_PATH /usr/local/lib
 ENV IMGPROXY_ALLOWED_SOURCES=https://s3-newsifier.ams3.digitaloceanspaces.com/,https://s3-newsifier.ams3.cdn.digitaloceanspaces.com/
 ENV IMGPROXY_MAX_SRC_RESOLUTION=200
+ENV IMGPROXY_SKIP_PROCESSING_FORMATS=gif
 CMD ["imgproxy"]
 
 EXPOSE 8080
