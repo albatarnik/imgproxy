@@ -33,6 +33,7 @@ ENV LD_LIBRARY_PATH /usr/local/lib
 ENV IMGPROXY_ALLOWED_SOURCES=https://s3-newsifier.ams3.digitaloceanspaces.com/,https://s3-newsifier.ams3.cdn.digitaloceanspaces.com/
 ENV IMGPROXY_MAX_SRC_RESOLUTION=200
 ENV IMGPROXY_SKIP_PROCESSING_FORMATS=gif
+ENV IMGPROXY_TTL=31536000
 CMD ["imgproxy"]
 
 EXPOSE 8080
